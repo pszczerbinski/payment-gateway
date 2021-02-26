@@ -2,6 +2,7 @@
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using PaymentGateway.Extensions;
     using PaymentGateway.Models;
     using Shouldly;
 
@@ -17,7 +18,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.Success);
@@ -32,7 +40,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.InvalidCardNumber);
@@ -47,7 +62,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.Success);
@@ -62,7 +84,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.InvalidExpirationDate);
@@ -77,7 +106,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.CardExpired);
@@ -92,7 +128,14 @@
             var amount = 1.99;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.InvalidCvv);
@@ -107,7 +150,14 @@
             var amount = -1;
             var currency = Currency.GBP;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.InvalidAmount);
@@ -122,7 +172,14 @@
             var amount = 1.99;
             Currency currency = null;
 
-            var paymentRequest = new PaymentRequest(cardNumber, expirationDate, cvv, amount, currency);
+            var paymentRequest = new PaymentRequest
+            {
+                CardNumber = cardNumber,
+                CardExpirationDate = expirationDate,
+                CardVerificationValue = cvv,
+                Amount = amount,
+                Currency = currency
+            };
             var validationResult = paymentRequest.Validate();
 
             validationResult.ShouldBe(PaymentRequestValidationResult.InvalidCurrency);
