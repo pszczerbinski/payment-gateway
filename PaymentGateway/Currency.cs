@@ -5,9 +5,15 @@
     using System.Linq;
     using System.Reflection;
 
+    /// <summary>
+    /// Represents a currency.
+    /// </summary>
     public class Currency
     {
+        /// <summary> Pound Sterling Currency </summary>
         public static readonly Currency GBP = new Currency("Pound Sterling", "GBP");
+
+        /// <summary> Euro Currency </summary>
         public static readonly Currency EURO = new Currency("Euro", "EUR");
 
         private static readonly Lazy<List<Currency>> Storage =
@@ -29,12 +35,26 @@
             this.Code = code;
         }
 
+        /// <summary>
+        /// Gets the name of the currency.
+        /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// Gets the currency code.
+        /// </summary>
         public string Code { get; }
 
+        /// <summary>
+        /// Gets all if the supported currencies.
+        /// </summary>
         public static IReadOnlyCollection<Currency> GetAllOptions => Storage.Value;
         
+        /// <summary>
+        /// Create an instance from currency code.
+        /// </summary>
+        /// <param name="code">The currency code.</param>
+        /// <returns><see cref="Currency"/> instance.</returns>
         public static Currency FromCode(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
