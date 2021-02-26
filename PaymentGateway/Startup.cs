@@ -14,7 +14,10 @@ namespace PaymentGateway
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
