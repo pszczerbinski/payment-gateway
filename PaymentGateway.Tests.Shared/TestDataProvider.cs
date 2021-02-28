@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Tests
+﻿namespace PaymentGateway.Tests.Shared
 {
     using System;
     using global::PaymentGateway.Models;

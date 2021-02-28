@@ -1,0 +1,9 @@
+﻿<RunSettings>
+    <RunConfiguration>
+        <TargetPlatform>x64</TargetPlatform>
+    </RunConfiguration>
+
+    <TestRunParameters>
+        <Parameter name="Address" value="http://localhost:5000" />
+    </TestRunParameters>
+</RunSettings>

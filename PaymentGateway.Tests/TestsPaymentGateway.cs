@@ -6,6 +6,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using global::PaymentGateway.Models;
+    using global::PaymentGateway.Tests.Shared;
     using Shouldly;
 
     [TestClass]

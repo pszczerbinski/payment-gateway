@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using global::PaymentGateway.Extensions;
+    using global::PaymentGateway.Tests.Shared;
     using Shouldly;
 
     [TestClass]

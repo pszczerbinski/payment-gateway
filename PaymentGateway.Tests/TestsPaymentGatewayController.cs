@@ -6,6 +6,7 @@
     using Moq;
     using global::PaymentGateway.Controllers;
     using global::PaymentGateway.Models;
+    using global::PaymentGateway.Tests.Shared;
     using Shouldly;
     using Microsoft.AspNetCore.Mvc;
 
