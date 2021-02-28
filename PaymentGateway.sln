@@ -15,20 +15,36 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway", "PaymentGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Tests", "PaymentGateway.Tests\PaymentGateway.Tests.csproj", "{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank", "Bank\Bank.csproj", "{27603BA0-7345-4A0C-BAD9-546188B56BB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Debug|x64.ActiveCfg = Debug|x64
 		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Debug|x64.Build.0 = Debug|x64
+		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Release|Any CPU.ActiveCfg = Release|x64
 		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Release|x64.ActiveCfg = Release|x64
 		{1B86F47B-8D00-4DA1-BC3E-8FE1DE7335AE}.Release|x64.Build.0 = Release|x64
+		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Debug|x64.ActiveCfg = Debug|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Debug|x64.Build.0 = Debug|x64
+		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Release|Any CPU.ActiveCfg = Release|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Release|x64.ActiveCfg = Release|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Release|x64.Build.0 = Release|x64
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|x64.Build.0 = Debug|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|x64.ActiveCfg = Release|Any CPU
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

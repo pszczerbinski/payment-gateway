@@ -1,5 +1,7 @@
 namespace PaymentGateway
 {
+    using Bank;
+    using global::PaymentGateway.Stubs;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -14,8 +16,13 @@ namespace PaymentGateway
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Here we can switch for real bank.
+            services.AddScoped<IBank, BankStub>();
+            services.AddScoped<IPaymentGateway, PaymentGateway>();
+
             services.AddControllers().AddJsonOptions(options =>
             {
+                options.JsonSerializerOptions.IgnoreNullValues = true;
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
             });
         }
@@ -35,7 +42,8 @@ namespace PaymentGateway
                 {
                     var rootApiString =
                         "# Payment Gateway #\n" +
-                        "Available APIs:\n";
+                        "Available APIs:\n" +
+                        "POST - api/v1/paymentgateway/processpayment - Processes a payment request";
 
                     await context.Response.WriteAsync(rootApiString);
                 });

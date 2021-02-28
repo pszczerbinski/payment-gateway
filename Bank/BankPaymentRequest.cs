@@ -1,12 +1,9 @@
-﻿namespace PaymentGateway.Models
+﻿namespace Bank
 {
-    using System.Text.Json.Serialization;
-    using global::PaymentGateway.Converters;
-
     /// <summary>
-    /// Defines the payment request.
+    /// Defines the bank payment request.
     /// </summary>
-    public class PaymentRequest
+    public class BankPaymentRequest
     {
         /// <summary>
         /// Gets the card number.
@@ -36,7 +33,6 @@
         /// <summary>
         /// Gets the payment currency.
         /// </summary>
-        [JsonConverter(typeof(JsonCurrencyConverter))]
-        public Currency Currency { get; set; }
+        public string Currency { get; set; }
     }
 }

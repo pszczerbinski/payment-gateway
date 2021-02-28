@@ -3,7 +3,7 @@
     using System;
     using System.Globalization;
     using System.Text.RegularExpressions;
-    using PaymentGateway.Models;
+    using global::PaymentGateway.Models;
 
     /// <summary>
     /// Extension methods for the <see cref="PaymentRequest"/> class.
@@ -47,6 +47,11 @@
             if (request.Currency == null)
             {
                 return PaymentRequestValidationResult.InvalidCurrency;
+            }
+
+            if (string.IsNullOrWhiteSpace(request.CardHolderName))
+            {
+                return PaymentRequestValidationResult.InvalidCardHolderName;
             }
 
             return PaymentRequestValidationResult.Success;

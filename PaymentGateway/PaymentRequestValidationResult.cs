@@ -22,5 +22,8 @@
 
         /// <summary> Invalid currency. </summary>
         InvalidCurrency = 6,
+
+        /// <summary> Invalid card holder name. </summary>
+        InvalidCardHolderName = 7,
     }
 }
