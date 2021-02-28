@@ -35,6 +35,19 @@ This API should be called with a JSON body containing the following fields (with
 | Pound Sterling | GBP |
 | Euro | EUR |
 
+## Testing
+### Unit tests
+Unit test have been included in the *PaymentGateway.Tests* project and can be run from the solution directory using the following command or from within Visual Studio.
+```
+dotnet test PaymentGateway.Tests/PaymentGateway.Tests.csproj
+```
+### Integration tests
+Once the docker container is running, the integration tests can be run from the solution directory using the following command.
+```
+dotnet test PaymentGateway.IntegrationTests/PaymentGateway.IntegrationTests.csproj --settings PaymentGateway.IntegrationTests/IntegrationTestSettings.runsettings
+```
+The *IntegrationTestSettings.runsettings* file contains the address of where the gateway is located so it can be changed if the container is running in the cloud.
+
 ## Areas for improvement
 - Support for AMEX cards, which have a 4 digit CVV
 - Addition of a billing address in the payment request
