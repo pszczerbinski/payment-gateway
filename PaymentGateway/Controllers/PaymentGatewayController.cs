@@ -32,7 +32,7 @@
                 return BadRequest(new PaymentResponse { Error = result.ToString() });
             }
 
-            var response = await this.paymentGateway.ProcessPaymentRequest(request);
+            var response = await this.paymentGateway.ProcessPaymentRequestAsync(request);
 
             return Ok(response);
         }

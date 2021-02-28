@@ -1,9 +1,7 @@
 ﻿namespace PaymentGateway.Tests
 {
-    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using global::PaymentGateway.Extensions;
-    using global::PaymentGateway.Models;
     using Shouldly;
 
     [TestClass]

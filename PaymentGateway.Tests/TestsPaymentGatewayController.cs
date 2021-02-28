@@ -31,7 +31,7 @@
                 Identifier = Guid.NewGuid().ToString(),
             };
 
-            this.paymentGatewayMock.Setup(x => x.ProcessPaymentRequest(It.IsAny<PaymentRequest>())).ReturnsAsync(expectedResponse);
+            this.paymentGatewayMock.Setup(x => x.ProcessPaymentRequestAsync(It.IsAny<PaymentRequest>())).ReturnsAsync(expectedResponse);
 
             var response = await this.controller.PostProcessPayment(request);
 

@@ -27,7 +27,7 @@
             PaymentRequest paymentRequest = null;
 
             Should.Throw<ArgumentNullException>(
-                () => this.paymentGateway.ProcessPaymentRequest(paymentRequest));
+                () => this.paymentGateway.ProcessPaymentRequestAsync(paymentRequest));
         }
 
         [TestMethod]
@@ -40,9 +40,9 @@
                 Identifier = Guid.NewGuid().ToString(),
             };
 
-            this.bankMock.Setup(x => x.ProcessPayment(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
+            this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
 
-            var actualResponse = await this.paymentGateway.ProcessPaymentRequest(request);
+            var actualResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
 
             actualResponse.Identifier.ShouldBe(expectedResponse.Identifier);
             actualResponse.Success.ShouldBe(expectedResponse.Success);
@@ -59,9 +59,9 @@
                 Identifier = Guid.NewGuid().ToString(),
             };
 
-            this.bankMock.Setup(x => x.ProcessPayment(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
+            this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
 
-            var actualResponse = await this.paymentGateway.ProcessPaymentRequest(request);
+            var actualResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
 
             actualResponse.Identifier.ShouldBe(expectedResponse.Identifier);
             actualResponse.Success.ShouldBe(expectedResponse.Success);

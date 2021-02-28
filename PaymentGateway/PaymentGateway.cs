@@ -18,7 +18,7 @@
             this.bank = bank ?? throw new ArgumentNullException(nameof(bank));
         }
 
-        public async Task<PaymentResponse> ProcessPaymentRequest(PaymentRequest request)
+        public async Task<PaymentResponse> ProcessPaymentRequestAsync(PaymentRequest request)
         {
             if (request == null)
             {
@@ -26,7 +26,7 @@
             }
 
             var bankRequest = BankModelConverter.From(request);
-            var response = await this.bank.ProcessPayment(bankRequest);
+            var response = await this.bank.ProcessPaymentAsync(bankRequest);
             return BankModelConverter.To(response);
         }
     }

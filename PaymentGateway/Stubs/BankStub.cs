@@ -8,7 +8,7 @@
     {
         private const double AmountLimit = 1000;
 
-        public Task<BankPaymentResponse> ProcessPayment(BankPaymentRequest request)
+        public Task<BankPaymentResponse> ProcessPaymentAsync(BankPaymentRequest request)
         {
             if (!request.Currency.Equals("GBP"))
             {

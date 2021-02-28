@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="request">Details of the payment to process.</param>
         /// <returns>A task containing the payment processing result.</returns>
-        public Task<BankPaymentResponse> ProcessPayment(BankPaymentRequest request);
+        public Task<BankPaymentResponse> ProcessPaymentAsync(BankPaymentRequest request);
     }
 }
