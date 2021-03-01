@@ -46,6 +46,8 @@ Unit test have been included in the *PaymentGateway.Tests* project and can be ru
 dotnet test PaymentGateway.Tests/PaymentGateway.Tests.csproj
 ```
 ### Integration tests
+The integration tests have been implemented to simulate the user using the API. The tests are using a simple `PaymentGatewayApi` class that uses the `HttpClient` to call the REST API of the Payment Gateway.
+
 Once the docker container is running, the integration tests can be run from the solution directory using the following command.
 ```
 dotnet test PaymentGateway.IntegrationTests/PaymentGateway.IntegrationTests.csproj --settings PaymentGateway.IntegrationTests/IntegrationTestSettings.runsettings
