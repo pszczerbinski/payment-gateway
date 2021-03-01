@@ -3,6 +3,7 @@
     using System;
     using global::PaymentGateway.Models;
     using global::PaymentGateway.Tests.Shared;
+    using Microsoft.Extensions.Logging.Abstractions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Shouldly;
 
@@ -14,7 +15,7 @@
         [TestInitialize]
         public void Initialize()
         {
-            this.paymentStorage = new PaymentStorage();
+            this.paymentStorage = new PaymentStorage(NullLoggerFactory.Instance);
         }
 
         [TestMethod]

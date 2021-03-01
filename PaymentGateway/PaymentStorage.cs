@@ -3,13 +3,20 @@
     using System;
     using System.Collections.Concurrent;
     using global::PaymentGateway.Models;
+    using Microsoft.Extensions.Logging;
 
     public class PaymentStorage : IPaymentStorage
     {
         private readonly ConcurrentDictionary<string, PaymentDetails> storage;
+        private readonly ILogger<PaymentStorage> logger;
 
-        public PaymentStorage()
+        public PaymentStorage(ILoggerFactory loggerFactory)
         {
+            if (loggerFactory != null)
+            {
+                this.logger = loggerFactory.CreateLogger<PaymentStorage>();
+            }
+
             this.storage = new ConcurrentDictionary<string, PaymentDetails>();
         }
 
@@ -32,6 +39,10 @@
                 MaskedCardNumber = $"************{request.CardNumber[12..]}",
             };
 
+            this.logger?.LogInformation(
+                "Saving transaction with id: {identifier}.",
+                details.Identifier);
+
             return this.storage.TryAdd(details.Identifier, details);
         }
 
@@ -44,8 +55,16 @@
 
             if (this.storage.TryGetValue(identifier, out var paymentDetails))
             {
+                this.logger?.LogInformation(
+                    "Successfully retrieved transaction with id: {identifier}.",
+                    identifier);
+
                 return paymentDetails;
             }
+
+            this.logger?.LogInformation(
+                "Transaction with id {identifier} was not found.",
+                identifier);
 
             return null;
         }

@@ -8,6 +8,7 @@
     using global::PaymentGateway.Models;
     using global::PaymentGateway.Tests.Shared;
     using Shouldly;
+    using Microsoft.Extensions.Logging.Abstractions;
 
     [TestClass]
     public class TestsPaymentGateway
@@ -21,7 +22,7 @@
         {
             this.bankMock = new Mock<IBank>();
             this.paymentStorageMock = new Mock<IPaymentStorage>();
-            this.paymentGateway = new PaymentGateway(this.bankMock.Object, this.paymentStorageMock.Object);
+            this.paymentGateway = new PaymentGateway(NullLoggerFactory.Instance, this.bankMock.Object, this.paymentStorageMock.Object);
         }
 
         [TestMethod]

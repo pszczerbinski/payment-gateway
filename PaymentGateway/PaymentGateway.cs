@@ -5,6 +5,7 @@
     using Bank;
     using global::PaymentGateway.Converters;
     using global::PaymentGateway.Models;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Implementation of the payment gateway.
@@ -13,9 +14,15 @@
     {
         private readonly IBank bank;
         private readonly IPaymentStorage storage;
+        private readonly ILogger<PaymentGateway> logger;
 
-        public PaymentGateway(IBank bank, IPaymentStorage storage)
+        public PaymentGateway(ILoggerFactory loggerFactory, IBank bank, IPaymentStorage storage)
         {
+            if (loggerFactory != null)
+            {
+                this.logger = loggerFactory.CreateLogger<PaymentGateway>();
+            }
+
             this.bank = bank ?? throw new ArgumentNullException(nameof(bank));
             this.storage = storage ?? throw new ArgumentNullException(nameof(storage));
         }
@@ -26,6 +33,11 @@
             {
                 throw new ArgumentNullException(nameof(request));
             }
+
+            this.logger?.LogInformation(
+                "Processing new payment for {amount} {currency}.",
+                request.Amount,
+                request.Currency.Code);
 
             var bankRequest = BankModelConverter.From(request);
             var banksResponse = await this.bank.ProcessPaymentAsync(bankRequest);
@@ -40,6 +52,10 @@
             {
                 throw new ArgumentNullException(nameof(identifier));
             }
+
+            this.logger?.LogInformation(
+                "Retrieving payment details for id: {identifier}.",
+                identifier);
 
             return this.storage.RetrievePaymentDetails(identifier);
         }
