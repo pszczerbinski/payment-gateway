@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway", "PaymentGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Tests", "PaymentGateway.Tests\PaymentGateway.Tests.csproj", "{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bank", "Bank\Bank.csproj", "{27603BA0-7345-4A0C-BAD9-546188B56BB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.IntegrationTests", "PaymentGateway.IntegrationTests\PaymentGateway.IntegrationTests.csproj", "{D58D0F23-00C8-4FE3-9FCB-2B89FFAD2C2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Tests.Shared", "PaymentGateway.Tests.Shared\PaymentGateway.Tests.Shared.csproj", "{9A11EFB8-D70A-4198-B6D1-1DC145C424EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -29,6 +35,18 @@ Global
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Debug|x64.Build.0 = Debug|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Release|x64.ActiveCfg = Release|x64
 		{9DF54B8E-71CC-438A-ABF7-FECF40E0CB00}.Release|x64.Build.0 = Release|x64
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|x64.ActiveCfg = Debug|x64
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Debug|x64.Build.0 = Debug|x64
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|x64.ActiveCfg = Release|x64
+		{27603BA0-7345-4A0C-BAD9-546188B56BB4}.Release|x64.Build.0 = Release|x64
+		{D58D0F23-00C8-4FE3-9FCB-2B89FFAD2C2F}.Debug|x64.ActiveCfg = Debug|x64
+		{D58D0F23-00C8-4FE3-9FCB-2B89FFAD2C2F}.Debug|x64.Build.0 = Debug|x64
+		{D58D0F23-00C8-4FE3-9FCB-2B89FFAD2C2F}.Release|x64.ActiveCfg = Release|x64
+		{D58D0F23-00C8-4FE3-9FCB-2B89FFAD2C2F}.Release|x64.Build.0 = Release|x64
+		{9A11EFB8-D70A-4198-B6D1-1DC145C424EF}.Debug|x64.ActiveCfg = Debug|x64
+		{9A11EFB8-D70A-4198-B6D1-1DC145C424EF}.Debug|x64.Build.0 = Debug|x64
+		{9A11EFB8-D70A-4198-B6D1-1DC145C424EF}.Release|x64.ActiveCfg = Release|x64
+		{9A11EFB8-D70A-4198-B6D1-1DC145C424EF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
