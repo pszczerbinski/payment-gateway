@@ -70,5 +70,43 @@
             paymentReponse.Success.ShouldBeFalse();
             paymentReponse.Error.ShouldBe(PaymentRequestValidationResult.CardExpired.ToString());
         }
+
+        [TestMethod]
+        public void ThatGetPaymentDetailsReturnsBadRequestWithNullIdentifier()
+        {
+            string identifier = null;
+
+            var response = this.controller.GetPaymentDetails(identifier);
+
+            response.Result.ShouldBeOfType<BadRequestObjectResult>();
+            var badRequestResponse = response.Result as BadRequestObjectResult;
+            badRequestResponse.Value.ShouldBeOfType<string>();
+            var error = badRequestResponse.Value as string;
+            error.ShouldNotBeNull();
+        }
+
+        [TestMethod]
+        public void ThatGetPaymentDetailsReturnsOkResponse()
+        {
+            var request = TestDataProvider.GetValidPaymentRequest();
+            var expectedResponse = new PaymentDetails
+            {
+                Identifier = Guid.NewGuid().ToString(),
+                MaskedCardNumber = $"************{request.CardNumber[12..]}",
+            };
+
+            this.paymentGatewayMock.Setup(x => x.RetrievePaymentDetails(expectedResponse.Identifier)).Returns(expectedResponse);
+
+            var response = this.controller.GetPaymentDetails(expectedResponse.Identifier);
+
+            response.Result.ShouldBeOfType<OkObjectResult>();
+            var okResponse = response.Result as OkObjectResult;
+            okResponse.Value.ShouldBeOfType<PaymentDetails>();
+            var actualReponse = okResponse.Value as PaymentDetails;
+            actualReponse.Identifier.ShouldBe(expectedResponse.Identifier);
+            actualReponse.Success.ShouldBeTrue();
+            actualReponse.Error.ShouldBeNull();
+            actualReponse.MaskedCardNumber.ShouldBe(expectedResponse.MaskedCardNumber);
+        }
     }
 }

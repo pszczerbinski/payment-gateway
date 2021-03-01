@@ -12,10 +12,12 @@
     public class PaymentGateway : IPaymentGateway
     {
         private readonly IBank bank;
+        private readonly IPaymentStorage storage;
 
-        public PaymentGateway(IBank bank)
+        public PaymentGateway(IBank bank, IPaymentStorage storage)
         {
             this.bank = bank ?? throw new ArgumentNullException(nameof(bank));
+            this.storage = storage ?? throw new ArgumentNullException(nameof(storage));
         }
 
         public async Task<PaymentResponse> ProcessPaymentRequestAsync(PaymentRequest request)
@@ -26,8 +28,20 @@
             }
 
             var bankRequest = BankModelConverter.From(request);
-            var response = await this.bank.ProcessPaymentAsync(bankRequest);
-            return BankModelConverter.To(response);
+            var banksResponse = await this.bank.ProcessPaymentAsync(bankRequest);
+            var response = BankModelConverter.To(banksResponse);
+            this.storage.SavePaymentDetails(request, response);
+            return response;
+        }
+
+        public PaymentDetails RetrievePaymentDetails(string identifier)
+        {
+            if (string.IsNullOrWhiteSpace(identifier))
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            return this.storage.RetrievePaymentDetails(identifier);
         }
     }
 }

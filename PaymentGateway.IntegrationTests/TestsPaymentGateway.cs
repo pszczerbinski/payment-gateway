@@ -171,5 +171,38 @@ namespace PaymentGateway.IntegrationTests
             result.Success.ShouldBeFalse();
             result.Error.ShouldBe(PaymentRequestValidationResult.InvalidCardHolderName.ToString());
         }
+
+        [TestMethod]
+        public async Task ThatCanRetrieveValidPayment()
+        {
+            var request = TestDataProvider.GetValidPaymentRequest();
+
+            var result = await this.paymentGateway.ProcessPaymentAsync(request);
+            result.ShouldNotBeNull();
+
+            var details = await this.paymentGateway.GetPaymentDetailsAsync(result.Identifier);
+            details.ShouldNotBeNull();
+            details.Identifier.ShouldBe(result.Identifier);
+            details.Success.ShouldBe(result.Success);
+            details.Error.ShouldBe(result.Error);
+            details.MaskedCardNumber[12..].ShouldBe(request.CardNumber[12..]);
+        }
+
+        [TestMethod]
+        public async Task ThatCanRetrieveFailedPayment()
+        {
+            var request = TestDataProvider.GetValidPaymentRequest();
+            request.Amount = 5000;
+
+            var result = await this.paymentGateway.ProcessPaymentAsync(request);
+            result.ShouldNotBeNull();
+
+            var details = await this.paymentGateway.GetPaymentDetailsAsync(result.Identifier);
+            details.ShouldNotBeNull();
+            details.Identifier.ShouldBe(result.Identifier);
+            details.Success.ShouldBe(result.Success);
+            details.Error.ShouldBe(result.Error);
+            details.MaskedCardNumber[12..].ShouldBe(request.CardNumber[12..]);
+        }
     }
 }

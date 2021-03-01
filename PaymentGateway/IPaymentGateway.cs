@@ -14,5 +14,12 @@
         /// <param name="request">Details of the payment to process.</param>
         /// <returns>A task containing the payment processing result.</returns>
         public Task<PaymentResponse> ProcessPaymentRequestAsync(PaymentRequest request);
+
+        /// <summary>
+        /// Retrieves previous payment details.
+        /// </summary>
+        /// <param name="identifier">Payment identifier.</param>
+        /// <returns>Payment details.</returns>
+        public PaymentDetails RetrievePaymentDetails(string identifier);
     }
 }

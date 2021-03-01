@@ -29,6 +29,10 @@ This API should be called with a JSON body containing the following fields (with
     "currency": "GBP"
 }
 ```
+__GET__ - *api/v1/paymentgateway/retrievepayment/{identifier}*
+
+This API retrieves details of payment process requests made using the `processpayment` API. The *`identifier`* should be the payment identifier from the response of the `processpayment` API.
+
 ### Supported currencies
 | Name | Code |
 |:----:|:----:|

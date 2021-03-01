@@ -36,12 +36,34 @@
                 request);
         }
 
+        public async Task<PaymentDetails> GetPaymentDetailsAsync(string identifier)
+        {
+            if (string.IsNullOrWhiteSpace(identifier))
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            return await this.ExecuteGetAsyncRestCall<PaymentDetails>(
+                $"api/v1/paymentgateway/retrievepayment/{identifier}");
+        }
+
         private async Task<TResp> ExecutePostAsyncRestCall<TReq, TResp>(string relativeUrl, TReq request)
         {
             var response = await this.httpClient.PostAsJsonAsync(relativeUrl, request);
+            return await this.GetTypeFromContent<TResp>(response.Content);
+        }
+
+        private async Task<T> ExecuteGetAsyncRestCall<T>(string relativeUrl)
+        {
+            var response = await this.httpClient.GetAsync(relativeUrl);
+            return await this.GetTypeFromContent<T>(response.Content);
+        }
+
+        private async Task<T> GetTypeFromContent<T>(HttpContent content)
+        {
             try
             {
-                return await response.Content.ReadFromJsonAsync<TResp>();
+                return await content.ReadFromJsonAsync<T>();
             }
             catch (JsonException)
             {

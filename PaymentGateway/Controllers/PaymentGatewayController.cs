@@ -36,5 +36,18 @@
 
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("retrievepayment/{identifier}")]
+        public ActionResult<PaymentDetails> GetPaymentDetails(string identifier)
+        {
+            if (string.IsNullOrWhiteSpace(identifier))
+            {
+                return BadRequest("Payment identifier must be provided");
+            }
+
+            var response = this.paymentGateway.RetrievePaymentDetails(identifier);
+            return Ok(response);
+        }
     }
 }
