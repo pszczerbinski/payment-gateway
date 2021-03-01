@@ -45,7 +45,7 @@ namespace PaymentGateway
                         "# Payment Gateway #\n" +
                         "Available APIs:\n" +
                         "POST - api/v1/paymentgateway/processpayment - Processes a payment request\n" +
-                        "GET - api/v1/paymentgateway/retrievepayment/{{identifier}}";
+                        "GET - api/v1/paymentgateway/retrievepayment/{identifier} - Retrieve details of previous payment using the payment identifier";
 
                     await context.Response.WriteAsync(rootApiString);
                 });
