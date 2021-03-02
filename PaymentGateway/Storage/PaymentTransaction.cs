@@ -11,44 +11,44 @@
     public class PaymentTransaction
     {
         /// <summary>
-        /// Gets the MongoDB object identifier.
+        /// Gets or sets the MongoDB object identifier.
         /// </summary>
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Identifier { get; set; }
 
         /// <summary>
-        /// Gets the payment identifier.
+        /// Gets or sets the payment identifier.
         /// </summary>
         [Required]
         public string PaymentIdentifier { get; set; }
 
         /// <summary>
-        /// Gets the value indicating whether the transaction was successful.
+        /// Gets or sets the value indicating whether the transaction was successful.
         /// </summary>
         [Required]
         public bool Success { get; set; }
 
         /// <summary>
-        /// Gets a transaction error, if occurred.
+        /// Gets or sets a transaction error, if occurred.
         /// </summary>
         [Required]
         public string Error { get; set; }
 
         /// <summary>
-        /// Gets the masked card number used in the transaction.
+        /// Gets or sets the masked card number used in the transaction.
         /// </summary>
         [Required]
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
-        /// Gets the transaction amount.
+        /// Gets or sets the transaction amount.
         /// </summary>
         [Required]
         public double Amount { get; set; }
 
         /// <summary>
-        /// Gets the transaction currency.
+        /// Gets or sets the transaction currency.
         /// </summary>
         [Required]
         public string Currency { get; set; }
