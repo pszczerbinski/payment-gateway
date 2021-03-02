@@ -36,6 +36,7 @@
             return new PaymentResponse
             {
                 Identifier = response.Identifier,
+                Success = response.Success,
                 Error = response.Error,
             };
         }

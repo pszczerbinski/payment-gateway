@@ -54,8 +54,16 @@ dotnet test PaymentGateway.IntegrationTests/PaymentGateway.IntegrationTests.cspr
 ```
 The *IntegrationTestSettings.runsettings* file contains the address of where the gateway is located so it can be changed if the container is running in the cloud.
 
+## MongoDB storage
+For this solution, I have implemented MongoDB storage for the payments. The storage will persist for the lifetime of the MongoDB container.
+
+### Mongo Express
+Database administration tools are available via Mongo Express at *http://localhost:8081/*.
+
 ## Areas for improvement
 - Support for AMEX cards, which have a 4 digit CVV
 - Addition of a billing address in the payment request
 - Validation in the bank stub layer
 - Better type for transaction amount to avoid double precision issues
+- Implement tests around the Mongo implementation
+- Improve code security by hiding sensitive data in a vault

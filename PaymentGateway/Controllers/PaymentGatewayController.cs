@@ -39,14 +39,14 @@
 
         [HttpGet]
         [Route("retrievepayment/{identifier}")]
-        public ActionResult<PaymentDetails> GetPaymentDetails(string identifier)
+        public async Task<ActionResult<PaymentDetails>> GetPaymentDetails(string identifier)
         {
             if (string.IsNullOrWhiteSpace(identifier))
             {
                 return BadRequest("Payment identifier must be provided");
             }
 
-            var response = this.paymentGateway.RetrievePaymentDetails(identifier);
+            var response = await this.paymentGateway.RetrievePaymentDetailsAsync(identifier);
             return Ok(response);
         }
     }

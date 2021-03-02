@@ -4,6 +4,9 @@
     using System.Text.Json;
     using System.Text.Json.Serialization;
 
+    /// <summary>
+    /// Defines a <see cref="Currency"/> JSON converter.
+    /// </summary>
     public class JsonCurrencyConverter : JsonConverter<Currency>
     {
         public override Currency Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

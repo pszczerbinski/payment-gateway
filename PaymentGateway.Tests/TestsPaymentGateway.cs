@@ -6,6 +6,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using global::PaymentGateway.Models;
+    using global::PaymentGateway.Storage;
     using global::PaymentGateway.Tests.Shared;
     using Shouldly;
     using Microsoft.Extensions.Logging.Abstractions;
@@ -45,7 +46,7 @@
             };
 
             this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
-            this.paymentStorageMock.Setup(x => x.SavePaymentDetails(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).Returns(true);
+            this.paymentStorageMock.Setup(x => x.SavePaymentDetailsAsync(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).ReturnsAsync(true);
 
             var actualResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
 
@@ -66,7 +67,7 @@
             };
 
             this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedResponse);
-            this.paymentStorageMock.Setup(x => x.SavePaymentDetails(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).Returns(true);
+            this.paymentStorageMock.Setup(x => x.SavePaymentDetailsAsync(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).ReturnsAsync(true);
 
             var actualResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
 
@@ -89,20 +90,24 @@
             {
                 Identifier = expectedBankResponse.Identifier,
                 MaskedCardNumber = $"************{request.CardNumber[12..]}",
+                Amount = request.Amount,
+                Currency = request.Currency.Code,
             };
 
             this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedBankResponse);
-            this.paymentStorageMock.Setup(x => x.SavePaymentDetails(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).Returns(true);
-            this.paymentStorageMock.Setup(x => x.RetrievePaymentDetails(It.IsAny<string>())).Returns(expectedPaymentDetails);
+            this.paymentStorageMock.Setup(x => x.SavePaymentDetailsAsync(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).ReturnsAsync(true);
+            this.paymentStorageMock.Setup(x => x.RetrievePaymentDetailsAsync(It.IsAny<string>())).ReturnsAsync(expectedPaymentDetails);
 
             var paymentResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
-            var actualPaymentDetails = this.paymentGateway.RetrievePaymentDetails(paymentResponse.Identifier);
+            var actualPaymentDetails = await this.paymentGateway.RetrievePaymentDetailsAsync(paymentResponse.Identifier);
 
             actualPaymentDetails.ShouldNotBeNull();
             actualPaymentDetails.Identifier.ShouldBe(expectedPaymentDetails.Identifier);
             actualPaymentDetails.Success.ShouldBe(expectedPaymentDetails.Success);
             actualPaymentDetails.Error.ShouldBe(expectedPaymentDetails.Error);
             actualPaymentDetails.MaskedCardNumber.ShouldBe(expectedPaymentDetails.MaskedCardNumber);
+            actualPaymentDetails.Amount.ShouldBe(expectedPaymentDetails.Amount);
+            actualPaymentDetails.Currency.ShouldBe(expectedPaymentDetails.Currency);
         }
 
         [TestMethod]
@@ -120,20 +125,24 @@
             {
                 Identifier = expectedBankResponse.Identifier,
                 MaskedCardNumber = $"************{request.CardNumber[12..]}",
+                Amount = request.Amount,
+                Currency = request.Currency.Code,
             };
 
             this.bankMock.Setup(x => x.ProcessPaymentAsync(It.IsAny<BankPaymentRequest>())).ReturnsAsync(expectedBankResponse);
-            this.paymentStorageMock.Setup(x => x.SavePaymentDetails(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).Returns(true);
-            this.paymentStorageMock.Setup(x => x.RetrievePaymentDetails(It.IsAny<string>())).Returns(expectedPaymentDetails);
+            this.paymentStorageMock.Setup(x => x.SavePaymentDetailsAsync(It.IsAny<PaymentRequest>(), It.IsAny<PaymentResponse>())).ReturnsAsync(true);
+            this.paymentStorageMock.Setup(x => x.RetrievePaymentDetailsAsync(It.IsAny<string>())).ReturnsAsync(expectedPaymentDetails);
 
             var paymentResponse = await this.paymentGateway.ProcessPaymentRequestAsync(request);
-            var actualPaymentDetails = this.paymentGateway.RetrievePaymentDetails(paymentResponse.Identifier);
+            var actualPaymentDetails = await this.paymentGateway.RetrievePaymentDetailsAsync(paymentResponse.Identifier);
 
             actualPaymentDetails.ShouldNotBeNull();
             actualPaymentDetails.Identifier.ShouldBe(expectedPaymentDetails.Identifier);
             actualPaymentDetails.Success.ShouldBe(expectedPaymentDetails.Success);
             actualPaymentDetails.Error.ShouldBe(expectedPaymentDetails.Error);
             actualPaymentDetails.MaskedCardNumber.ShouldBe(expectedPaymentDetails.MaskedCardNumber);
+            actualPaymentDetails.Amount.ShouldBe(expectedPaymentDetails.Amount);
+            actualPaymentDetails.Currency.ShouldBe(expectedPaymentDetails.Currency);
         }
     }
 }

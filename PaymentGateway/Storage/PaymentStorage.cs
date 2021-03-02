@@ -1,10 +1,14 @@
-﻿namespace PaymentGateway
+﻿namespace PaymentGateway.Storage
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Threading.Tasks;
     using global::PaymentGateway.Models;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    /// Simple implementation of <see cref="IPaymentStorage"/> storage layer.
+    /// </summary>
     public class PaymentStorage : IPaymentStorage
     {
         private readonly ConcurrentDictionary<string, PaymentDetails> storage;
@@ -20,7 +24,7 @@
             this.storage = new ConcurrentDictionary<string, PaymentDetails>();
         }
 
-        public bool SavePaymentDetails(PaymentRequest request, PaymentResponse response)
+        public Task<bool> SavePaymentDetailsAsync(PaymentRequest request, PaymentResponse response)
         {
             if (request == null)
             {
@@ -35,18 +39,21 @@
             var details = new PaymentDetails
             {
                 Identifier = response.Identifier,
+                Success = response.Success,
                 Error = response.Error,
                 MaskedCardNumber = $"************{request.CardNumber[12..]}",
+                Amount = request.Amount,
+                Currency = request.Currency.Code,
             };
 
             this.logger?.LogInformation(
                 "Saving transaction with id: {identifier}.",
                 details.Identifier);
 
-            return this.storage.TryAdd(details.Identifier, details);
+            return Task.FromResult(this.storage.TryAdd(details.Identifier, details));
         }
 
-        public PaymentDetails RetrievePaymentDetails(string identifier)
+        public Task<PaymentDetails> RetrievePaymentDetailsAsync(string identifier)
         {
             if (string.IsNullOrWhiteSpace(identifier))
             {
@@ -59,7 +66,7 @@
                     "Successfully retrieved transaction with id: {identifier}.",
                     identifier);
 
-                return paymentDetails;
+                return Task.FromResult(paymentDetails);
             }
 
             this.logger?.LogInformation(

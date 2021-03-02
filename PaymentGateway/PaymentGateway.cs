@@ -5,6 +5,7 @@
     using Bank;
     using global::PaymentGateway.Converters;
     using global::PaymentGateway.Models;
+    using global::PaymentGateway.Storage;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -42,11 +43,19 @@
             var bankRequest = BankModelConverter.From(request);
             var banksResponse = await this.bank.ProcessPaymentAsync(bankRequest);
             var response = BankModelConverter.To(banksResponse);
-            this.storage.SavePaymentDetails(request, response);
+            var saveResult = await this.storage.SavePaymentDetailsAsync(request, response);
+            if (!saveResult)
+            {
+                // Could retry the save operation.
+                this.logger?.LogError(
+                    "Failed to save transaction with id: {identifier}.",
+                    response.Identifier);
+            }
+
             return response;
         }
 
-        public PaymentDetails RetrievePaymentDetails(string identifier)
+        public async Task<PaymentDetails> RetrievePaymentDetailsAsync(string identifier)
         {
             if (string.IsNullOrWhiteSpace(identifier))
             {
@@ -57,7 +66,8 @@
                 "Retrieving payment details for id: {identifier}.",
                 identifier);
 
-            return this.storage.RetrievePaymentDetails(identifier);
+            var details = await this.storage.RetrievePaymentDetailsAsync(identifier);
+            return details;
         }
     }
 }

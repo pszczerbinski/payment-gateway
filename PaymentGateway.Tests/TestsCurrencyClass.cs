@@ -1,5 +1,6 @@
 ﻿namespace PaymentGateway.Tests
 {
+    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Shouldly;
 
@@ -33,6 +34,14 @@
 
             currency.Name.ShouldBe(name);
             currency.Code.ShouldBe(code);
+        }
+
+        [TestMethod]
+        public void ThatCannotCreateCurrencyFromInvalidCode()
+        {
+            var code = "USD";
+            
+            Should.Throw<InvalidCastException>(() => Currency.FromCode(code));
         }
     }
 }

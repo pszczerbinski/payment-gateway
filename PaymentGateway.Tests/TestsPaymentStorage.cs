@@ -1,7 +1,9 @@
 ﻿namespace PaymentGateway.Tests
 {
     using System;
+    using System.Threading.Tasks;
     using global::PaymentGateway.Models;
+    using global::PaymentGateway.Storage;
     using global::PaymentGateway.Tests.Shared;
     using Microsoft.Extensions.Logging.Abstractions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,9 +27,10 @@
             var response = new PaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = true,
             };
 
-            Should.Throw<ArgumentNullException>(() => this.paymentStorage.SavePaymentDetails(request, response));
+            Should.Throw<ArgumentNullException>(() => this.paymentStorage.SavePaymentDetailsAsync(request, response));
         }
 
         [TestMethod]
@@ -36,19 +39,20 @@
             var request = TestDataProvider.GetValidPaymentRequest();
             PaymentResponse response = null;
 
-            Should.Throw<ArgumentNullException>(() => this.paymentStorage.SavePaymentDetails(request, response));
+            Should.Throw<ArgumentNullException>(() => this.paymentStorage.SavePaymentDetailsAsync(request, response));
         }
 
         [TestMethod]
-        public void ThatCanSavePayment()
+        public async Task ThatCanSavePayment()
         {
             var request = TestDataProvider.GetValidPaymentRequest();
             var response = new PaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = true,
             };
 
-            var result = this.paymentStorage.SavePaymentDetails(request, response);
+            var result = await this.paymentStorage.SavePaymentDetailsAsync(request, response);
 
             result.ShouldBeTrue();
         }
@@ -58,39 +62,43 @@
         {
             string identifier = null;
 
-            Should.Throw<ArgumentNullException>(() => this.paymentStorage.RetrievePaymentDetails(identifier));
+            Should.Throw<ArgumentNullException>(() => this.paymentStorage.RetrievePaymentDetailsAsync(identifier));
         }
 
         [TestMethod]
-        public void ThatCanRetrievePaymentDetails()
+        public async Task ThatCanRetrievePaymentDetails()
         {
             var request = TestDataProvider.GetValidPaymentRequest();
             var response = new PaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = true,
             };
 
-            var result = this.paymentStorage.SavePaymentDetails(request, response);
-            var details = this.paymentStorage.RetrievePaymentDetails(response.Identifier);
+            var result = await this.paymentStorage.SavePaymentDetailsAsync(request, response);
+            var details = await this.paymentStorage.RetrievePaymentDetailsAsync(response.Identifier);
 
             details.ShouldNotBeNull();
             details.Identifier.ShouldBe(response.Identifier);
             details.Success.ShouldBe(response.Success);
             details.Error.ShouldBe(response.Error);
             details.MaskedCardNumber[12..].ShouldBe(request.CardNumber[12..]);
+            details.Amount.ShouldBe(request.Amount);
+            details.Currency.ShouldBe(request.Currency.Code);
         }
 
         [TestMethod]
-        public void ThatCannotRetrievePaymentDetailsWithInvalidIdentifier()
+        public async Task ThatCannotRetrievePaymentDetailsWithInvalidIdentifier()
         {
             var request = TestDataProvider.GetValidPaymentRequest();
             var response = new PaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = true,
             };
 
-            _ = this.paymentStorage.SavePaymentDetails(request, response);
-            var details = this.paymentStorage.RetrievePaymentDetails(Guid.NewGuid().ToString());
+            _ = await this.paymentStorage.SavePaymentDetailsAsync(request, response);
+            var details = this.paymentStorage.RetrievePaymentDetailsAsync(Guid.NewGuid().ToString());
 
             details.ShouldBeNull();
         }

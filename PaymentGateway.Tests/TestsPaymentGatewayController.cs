@@ -30,6 +30,7 @@
             var expectedResponse = new PaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = true,
             };
 
             this.paymentGatewayMock.Setup(x => x.ProcessPaymentRequestAsync(It.IsAny<PaymentRequest>())).ReturnsAsync(expectedResponse);
@@ -72,11 +73,11 @@
         }
 
         [TestMethod]
-        public void ThatGetPaymentDetailsReturnsBadRequestWithNullIdentifier()
+        public async Task ThatGetPaymentDetailsReturnsBadRequestWithNullIdentifier()
         {
             string identifier = null;
 
-            var response = this.controller.GetPaymentDetails(identifier);
+            var response = await this.controller.GetPaymentDetails(identifier);
 
             response.Result.ShouldBeOfType<BadRequestObjectResult>();
             var badRequestResponse = response.Result as BadRequestObjectResult;
@@ -86,18 +87,21 @@
         }
 
         [TestMethod]
-        public void ThatGetPaymentDetailsReturnsOkResponse()
+        public async Task ThatGetPaymentDetailsReturnsOkResponse()
         {
             var request = TestDataProvider.GetValidPaymentRequest();
             var expectedResponse = new PaymentDetails
             {
+                Success = true,
                 Identifier = Guid.NewGuid().ToString(),
                 MaskedCardNumber = $"************{request.CardNumber[12..]}",
+                Amount = request.Amount,
+                Currency = request.Currency.Code,
             };
 
-            this.paymentGatewayMock.Setup(x => x.RetrievePaymentDetails(expectedResponse.Identifier)).Returns(expectedResponse);
+            this.paymentGatewayMock.Setup(x => x.RetrievePaymentDetailsAsync(expectedResponse.Identifier)).ReturnsAsync(expectedResponse);
 
-            var response = this.controller.GetPaymentDetails(expectedResponse.Identifier);
+            var response = await this.controller.GetPaymentDetails(expectedResponse.Identifier);
 
             response.Result.ShouldBeOfType<OkObjectResult>();
             var okResponse = response.Result as OkObjectResult;
@@ -107,6 +111,8 @@
             actualReponse.Success.ShouldBeTrue();
             actualReponse.Error.ShouldBeNull();
             actualReponse.MaskedCardNumber.ShouldBe(expectedResponse.MaskedCardNumber);
+            actualReponse.Amount.ShouldBe(expectedResponse.Amount);
+            actualReponse.Currency.ShouldBe(expectedResponse.Currency);
         }
     }
 }

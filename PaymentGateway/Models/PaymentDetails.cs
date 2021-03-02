@@ -15,11 +15,21 @@
         /// <summary>
         /// Gets a value indicating whether the payment was successful.
         /// </summary>
-        public bool Success => this.Error == null;
+        public bool Success { get; set; }
 
         /// <summary>
         /// Gets the payment error.
         /// </summary>
         public string Error { get; set; }
+
+        /// <summary>
+        /// Gets the payment amount.
+        /// </summary>
+        public double Amount { get; set; }
+
+        /// <summary>
+        /// Gets the payment currency.
+        /// </summary>
+        public string Currency { get; set; }
     }
 }

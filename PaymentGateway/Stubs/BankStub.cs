@@ -4,6 +4,9 @@
     using System.Threading.Tasks;
     using Bank;
 
+    /// <summary>
+    /// Simple implementation of <see cref="IBank"/>.
+    /// </summary>
     public class BankStub : IBank
     {
         private const double AmountLimit = 1000;
@@ -15,6 +18,7 @@
                 return Task.FromResult(new BankPaymentResponse
                 {
                     Identifier = Guid.NewGuid().ToString(),
+                    Success = false,
                     Error = "Unsupported currency",
                 });
             }
@@ -24,6 +28,7 @@
                 return Task.FromResult(new BankPaymentResponse
                 {
                     Identifier = Guid.NewGuid().ToString(),
+                    Success = false,
                     Error = "Insufficient funds",
                 });
             }
@@ -32,12 +37,14 @@
                 return Task.FromResult(new BankPaymentResponse
                 {
                     Identifier = Guid.NewGuid().ToString(),
+                    Success = true,
                 });
             }
 
             return Task.FromResult(new BankPaymentResponse
             {
                 Identifier = Guid.NewGuid().ToString(),
+                Success = false,
                 Error = "Invalid amount",
             });
         }

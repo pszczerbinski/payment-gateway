@@ -1,25 +1,40 @@
 namespace PaymentGateway
 {
     using Bank;
+    using global::PaymentGateway.Storage;
     using global::PaymentGateway.Stubs;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
     public class Startup
     {
-        public Startup()
+        private readonly IConfiguration configuration;
+
+        public Startup(IConfiguration configuration)
         {
+            this.configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var dataBaseSettings = new DatabaseSettings();
+            this.configuration.GetSection("DatabaseSettings").Bind(dataBaseSettings);
+            dataBaseSettings.Validate();
+
+            services.AddSingleton<IDatabaseSettings>(dataBaseSettings);
+            services.AddSingleton<IMongoPaymentStorageContext, MongoPaymentStorageContext>();
+
+            // Here we can switch storage implementations.
+            // DEV - services.AddSingleton<IPaymentStorage, PaymentStorage>();
+            services.AddSingleton<IPaymentStorage, MongoPaymentStorage>();
+
             // Here we can switch for real bank.
             services.AddScoped<IBank, BankStub>();
             services.AddScoped<IPaymentGateway, PaymentGateway>();
-            services.AddSingleton<IPaymentStorage, PaymentStorage>();
 
             services.AddControllers().AddJsonOptions(options =>
             {

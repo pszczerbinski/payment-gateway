@@ -19,7 +19,7 @@
         /// Retrieves previous payment details.
         /// </summary>
         /// <param name="identifier">Payment identifier.</param>
-        /// <returns>Payment details.</returns>
-        public PaymentDetails RetrievePaymentDetails(string identifier);
+        /// <returns>A task containing the payment details.</returns>
+        public Task<PaymentDetails> RetrievePaymentDetailsAsync(string identifier);
     }
 }
