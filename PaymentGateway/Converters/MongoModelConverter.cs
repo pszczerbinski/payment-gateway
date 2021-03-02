@@ -22,6 +22,7 @@
 
             return new PaymentDetails
             {
+                Success = transaction.Success,
                 Identifier = transaction.PaymentIdentifier,
                 MaskedCardNumber = transaction.MaskedCardNumber,
                 Error = transaction.Error,
