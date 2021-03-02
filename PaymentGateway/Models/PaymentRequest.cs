@@ -9,32 +9,32 @@
     public class PaymentRequest
     {
         /// <summary>
-        /// Gets the card number.
+        /// Gets or sets the card number.
         /// </summary>
         public string CardNumber { get; set; }
 
         /// <summary>
-        /// Gets the card expiration date.
+        /// Gets or sets the card expiration date.
         /// </summary>
         public string CardExpirationDate { get; set; }
 
         /// <summary>
-        /// Gets the card verification value.
+        /// Gets or sets the card verification value.
         /// </summary>
         public string CardVerificationValue { get; set; }
 
         /// <summary>
-        /// Gets the name of the card holder.
+        /// Gets or sets the name of the card holder.
         /// </summary>
         public string CardHolderName { get; set; }
 
         /// <summary>
-        /// Gets the payment amount.
+        /// Gets or sets the payment amount.
         /// </summary>
         public double Amount { get; set; }
 
         /// <summary>
-        /// Gets the payment currency.
+        /// Gets or sets the payment currency.
         /// </summary>
         [JsonConverter(typeof(JsonCurrencyConverter))]
         public Currency Currency { get; set; }

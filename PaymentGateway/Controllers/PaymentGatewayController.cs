@@ -6,6 +6,9 @@
     using global::PaymentGateway.Models;
     using global::PaymentGateway.Extensions;
 
+    /// <summary>
+    /// Implementation of the payment gateway controller.
+    /// </summary>
     [Route("api/v1/[controller]")]
     public class PaymentGatewayController : Controller
     {
