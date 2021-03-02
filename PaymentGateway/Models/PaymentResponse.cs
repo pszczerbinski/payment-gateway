@@ -1,5 +1,8 @@
 ﻿namespace PaymentGateway.Models
 {
+    /// <summary>
+    /// Defines a payment response.
+    /// </summary>
     public class PaymentResponse
     {
         /// <summary>
@@ -10,7 +13,7 @@
         /// <summary>
         /// Gets a value indicating whether the payment was successful.
         /// </summary>
-        public bool Success => this.Error == null;
+        public bool Success { get; set; }
 
         /// <summary>
         /// Gets the payment processing error.

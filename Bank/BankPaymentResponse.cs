@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets a value indicating whether payment was successful.
         /// </summary>
-        public bool Success => this.Error == null;
+        public bool Success { get; set; }
 
         /// <summary>
         /// Gets the payment processing error.

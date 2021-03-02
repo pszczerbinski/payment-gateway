@@ -1,7 +1,9 @@
 namespace PaymentGateway
 {
     using System;
+    using System.IO;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Serilog;
     using Serilog.Events;
@@ -10,6 +12,7 @@ namespace PaymentGateway
     {
         public static void Main(string[] args)
         {
+            BuildConfiguration();
             Log.Logger = CreateSerilogLogger();
             try
             {
@@ -42,6 +45,15 @@ namespace PaymentGateway
                 .WriteTo.Console(LogEventLevel.Information);
 
             return config.CreateLogger();
+        }
+
+        private static void BuildConfiguration()
+        {
+            _ = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
         }
     }
 }
