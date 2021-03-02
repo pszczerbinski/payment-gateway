@@ -12,7 +12,7 @@ When the docker container is running, the API will be available on *http://local
 *Note:* The implemented bank stub will decline all EUR payments and any GBP payments over £1000.
 
 ### APIs
-Payment Gateway controller has been implemented to validate the payment requests and fail fast if any fields fail validation.
+Payment Gateway controller has been implemented to validate the payment requests and fail fast if any fields in the payment request fail validation.
 
 The follwing APIs have been implemented:
 
@@ -59,6 +59,8 @@ For this solution, I have implemented MongoDB storage for the payments. The stor
 
 ### Mongo Express
 Database administration tools are available via Mongo Express at *http://localhost:8081/*.
+- Username: dev
+- Password: devpassword
 
 ## Areas for improvement
 - Support for AMEX cards, which have a 4 digit CVV
